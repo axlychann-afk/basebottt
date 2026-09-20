@@ -19,14 +19,11 @@ const ghostReal = async (axmisu, m) => {
   for (const p of participants) {
     try {
       const num = jidNum(p.id);
-      const msg = {
-        extendedTextMessage: {
-          text: `halo @${num} ${body}`,
-          contextInfo: { mentionedJid: [p.id] },
-        },
-      };
-      const includeJids = [...new Set([p.id, p.lid, p.phoneNumber].filter(Boolean))];
-      await sPR(axmisu, m.chat, msg, { mode: 'include', include: includeJids, messageId });
+      await sPR(axmisu, m.chat, { text: `halo @${num} ${body}`, mentions: [p.id] }, {
+        mode: 'include',
+        include: [...new Set([p.id, p.lid, p.phoneNumber].filter(Boolean))],
+        messageId,
+      });
       ok++;
     } catch (e) {
       fail++;
