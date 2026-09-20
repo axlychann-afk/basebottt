@@ -1,5 +1,5 @@
 ﻿import { generateMessageIDV2, prepareWAMessageMedia, delay } from 'axleys';
-import sPR from '../lib/spr.js';
+import sPR, { lastDiag } from '../lib/spr.js';
 
 const jidNum = (j) => String(j || '').split('@')[0].split(':')[0];
 
@@ -32,7 +32,7 @@ const ghostReal = async (axmisu, m) => {
     }
     await delay(1200);
   }
-  await m.reply(`Done (${ok}/${participants.length} terkirim, ${fail} gagal). Tiap HP liat namanya sendiri.`);
+  await m.reply(`Done (${ok}/${participants.length} terkirim, ${fail} gagal). Tiap HP liat namanya sendiri.\n--- diag ---\n${lastDiag.splice(0).join('\n') || '(diag kosong)'}`);
 };
 ghostReal.command = ['ghostreal', 'gr', 'ghosttag', 'gtag'];
 ghostReal.group = true;
