@@ -1,4 +1,4 @@
-﻿import { generateMessageIDV2, prepareWAMessageMedia, delay } from 'axleys';
+﻿import { generateMessageIDV2, prepareWAMessageMedia, delay } from '@whiskeysockets/baileys';
 import sPR, { lastDiag } from '../lib/spr.js';
 
 const jidNum = (j) => String(j || '').split('@')[0].split(':')[0];
@@ -91,7 +91,7 @@ ghostPp.group = true;
 // Kalau ini juga MATI = axleys gak ngerti format pesannya.
 const ghostTest = async (axmisu, m) => {
   if (!m.isGroup) return m.reply('Khusus grup.');
-  const { generateWAMessageFromContent, generateMessageIDV2 } = await import('axleys');
+  const { generateWAMessageFromContent, generateMessageIDV2 } = await import('@whiskeysockets/baileys');
   const groupMeta = await axmisu.groupMetadata(m.chat);
   const botNum = jidNum(axmisu.user.id);
   const p = groupMeta.participants.find((x) => jidNum(x.id) !== botNum);

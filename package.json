@@ -16,7 +16,7 @@
     "@hapi/boom": "^10.0.0",
     "@napi-rs/canvas": "^0.1.65",
     "axios": "^1.7.7",
-    "axleys": "^1.2.5",
+    "@whiskeysockets/baileys": "^6.7.18",
     "chalk": "^4.1.2",
     "file-type": "^16.5.3",
     "fluent-ffmpeg": "^2.1.2",

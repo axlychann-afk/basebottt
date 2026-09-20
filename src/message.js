@@ -12,7 +12,7 @@ OWNER TELE : AXMISU.BIZ.ID/HUBUNGITELEGRAM
 OWNER WA : AXMISU.BIZ.ID/HUBUNGIWA
 */
 
-import { getContentType, extractMessageContent, downloadMediaMessage } from 'axleys';
+import { getContentType, extractMessageContent, downloadMediaMessage } from '@whiskeysockets/baileys';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
