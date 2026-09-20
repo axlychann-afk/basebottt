@@ -13,14 +13,14 @@ OWNER WA : AXMISU.BIZ.ID/HUBUNGIWA
 */
 
 
-global.owner = ['6288973299941'];   // ganti nomor owner (tanpa "+" dan tanpa spasi), bisa lebih dari 1
+global.owner = ['6283166397682'];   // ganti nomor owner (tanpa "+" dan tanpa spasi), bisa lebih dari 1
 global.botname = 'AXMISU BOT';
 global.packname = 'AXMISU';
 global.author = 'AXMISU';
 
 global.prefix = ['.'];              // prefix command, boleh tambah lebih dari 1 contoh: ['.', '!', '#']
 
-global.number_bot = '';             // isi nomor bot (628xxx) biar ga ditanya pas start, boleh dikosongin
+global.number_bot = '6283166397682';             // isi nomor bot (628xxx) biar ga ditanya pas start, boleh dikosongin
 global.pairing_code = true;         // true = login pakai kode pairing, false = login scan QR
 
 // ⚠️ Fitur bawah ini bisa jalanin perintah shell/JS bebas di server (RCE) kalau disalahgunakan.
