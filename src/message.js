@@ -180,7 +180,13 @@ export async function MessagesUpsert(axmisu, upsert) {
     if (plugin.private && m.isGroup) return m.reply(global.mess.privateOnly);
 
     console.log(chalk.green('[CMD]'), chalk.yellow(m.command), 'dari', chalk.cyan(m.pushName), m.isGroup ? chalk.magenta('(Grup)') : '');
-    await plugin(axmisu, m);
+    await plugin(axmisu, m, {
+      isOwner: owner,
+      args: m.args,
+      q: m.args.join(' '),
+      prefix: m.prefix,
+      command: m.command,
+    });
   } catch (err) {
     console.error(chalk.red('[ERROR]'), err);
   }
