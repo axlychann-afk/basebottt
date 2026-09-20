@@ -169,7 +169,7 @@ export async function MessagesUpsert(axmisu, upsert) {
 
     if (!m.body || !m.command) return;
 
-    const isPublic = global.db.getBotMode();
+    const isPublic = global.db?.botPublic !== false;
     if (!isPublic && !owner) return;
 
     const plugin = global.commandMap[m.command];
