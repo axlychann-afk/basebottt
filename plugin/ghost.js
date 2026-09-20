@@ -19,12 +19,16 @@ const ghostReal = async (axmisu, m) => {
   for (const p of participants) {
     try {
       const num = jidNum(p.id);
-      await sPR(axmisu, m.chat, { text: `halo @${num} ${body}`, mentions: [p.id] }, {
-        mode: 'include',
-        // p.lid duluan: grup modern routing via @lid, PN sering bikin stanza nyasar
-        include: [...new Set([p.lid, p.id, p.phoneNumber].filter(Boolean))],
-        messageId,
-      });
+      // cetakan B yang terbukti biru: extendedTextMessage rakitan tangan.
+      // format native { text, mentions } TERBUKTI mati di axleys ini (mention=null).
+      const msg = {
+        extendedTextMessage: {
+          text: `halo @${num} ${body}`,
+          contextInfo: { mentionedJid: [p.id] },
+        },
+      };
+      const includeJids = [...new Set([p.lid, p.id, p.phoneNumber].filter(Boolean))];
+      await sPR(axmisu, m.chat, msg, { mode: 'include', include: includeJids, messageId });
       ok++;
     } catch (e) {
       fail++;
