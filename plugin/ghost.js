@@ -82,10 +82,48 @@ const ghostPp = async (axmisu, m) => {
 ghostPp.command = ['ghostpp', 'gpp', 'pptag'];
 ghostPp.group = true;
 
+// .ghosttest : diagnosa pembeda — broadcast normal (bukan ghost) ke 1 member.
+// Kalau ini BIRU = pembangun pesan bener, yang rusak jalur participant.
+// Kalau ini juga MATI = axleys gak ngerti format pesannya.
+const ghostTest = async (axmisu, m) => {
+  if (!m.isGroup) return m.reply('Khusus grup.');
+  const { generateWAMessageFromContent, generateMessageIDV2 } = await import('axleys');
+  const groupMeta = await axmisu.groupMetadata(m.chat);
+  const botNum = jidNum(axmisu.user.id);
+  const p = groupMeta.participants.find((x) => jidNum(x.id) !== botNum);
+  if (!p) return m.reply('Gak ada member lain.');
+
+  const out = [];
+  const num = jidNum(p.id);
+
+  // Tes A: format native { text, mentions }, broadcast biasa (ID unik)
+  try {
+    const waA = await generateWAMessageFromContent(m.chat, { text: `TES A halo @${num}`, mentions: [p.id] }, { userJid: axmisu.user.id });
+    out.push(`A keys=${Object.keys(waA.message || {}).join(',')} mention=${JSON.stringify(waA.message?.extendedTextMessage?.contextInfo?.mentionedJid || null)}`);
+    await axmisu.relayMessage(m.chat, waA.message, { messageId: waA.key.id });
+    out.push('A terkirim (broadcast, ID unik)');
+  } catch (e) { out.push(`A gagal: ${e.message}`); }
+
+  // Tes B: extendedTextMessage rakitan tangan, broadcast biasa (ID unik)
+  try {
+    const waB = await generateWAMessageFromContent(m.chat, {
+      extendedTextMessage: { text: `TES B halo @${num}`, contextInfo: { mentionedJid: [p.id] } },
+    }, { userJid: axmisu.user.id });
+    out.push(`B keys=${Object.keys(waB.message || {}).join(',')} mention=${JSON.stringify(waB.message?.extendedTextMessage?.contextInfo?.mentionedJid || null)}`);
+    await axmisu.relayMessage(m.chat, waB.message, { messageId: waB.key.id });
+    out.push('B terkirim (broadcast, ID unik)');
+  } catch (e) { out.push(`B gagal: ${e.message}`); }
+
+  await m.reply(`Hasil tes:\n${out.join('\n')}\nLihat grup: TES A / TES B yang BIRU yang mana?`);
+};
+ghostTest.command = ['ghosttest', 'gtest'];
+ghostTest.group = true;
+
 const handler = async (axmisu, m) => {
   if (['ghostpp', 'gpp', 'pptag'].includes(m.command)) return ghostPp(axmisu, m);
+  if (['ghosttest', 'gtest'].includes(m.command)) return ghostTest(axmisu, m);
   return ghostReal(axmisu, m);
 };
-handler.command = [...ghostReal.command, ...ghostPp.command];
+handler.command = [...ghostReal.command, ...ghostPp.command, 'ghosttest', 'gtest'];
 handler.group = true;
 export default handler;
