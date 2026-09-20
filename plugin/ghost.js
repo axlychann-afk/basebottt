@@ -21,7 +21,8 @@ const ghostReal = async (axmisu, m) => {
       const num = jidNum(p.id);
       await sPR(axmisu, m.chat, { text: `halo @${num} ${body}`, mentions: [p.id] }, {
         mode: 'include',
-        include: [...new Set([p.id, p.lid, p.phoneNumber].filter(Boolean))],
+        // p.lid duluan: grup modern routing via @lid, PN sering bikin stanza nyasar
+        include: [...new Set([p.lid, p.id, p.phoneNumber].filter(Boolean))],
         messageId,
       });
       ok++;
